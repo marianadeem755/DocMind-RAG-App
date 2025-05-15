@@ -12,8 +12,6 @@ This is a powerful Streamlit‑based application for uploading, exploring, and l
 * **Custom Analysis** – run topic extraction, keyword detection, or other bespoke tasks
 * **Learning‑Style Adaptation** – responses are tailored to Visual, Auditory, Reading/Writing, or Kinesthetic preferences
 
----
-
 ## 🚀 Installation
 
 ```bash
@@ -46,7 +44,6 @@ streamlit run app.py
 * **Reading / Writing** – text‑heavy, bullet‑pointed responses
 * **Kinesthetic** – step‑by‑step, hands‑on examples and exercises
 
----
 
 ## 📄 🌟 Acknowledgments
 - Built with [Streamlit](https://streamlit.io/).
