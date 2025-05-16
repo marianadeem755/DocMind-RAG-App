@@ -1530,15 +1530,15 @@ with tabs[3]:
             st.subheader("Custom Document Analysis")
             
             custom_analysis_types = [
-                "Content Structure Analysis",
-                "Main Arguments Extraction",
-                "Learning Objectives Identification",
-                "Technical Complexity Assessment", 
-                "Key Definitions Extraction",
-                "Action Items Identification"
+            "Content Structure Analysis",
+            "Main Arguments Extraction",
+            "Learning Objectives Identification",
+            "Technical Complexity Assessment", 
+            "Key Definitions Extraction",
+            "Action Items Identification"
             ]
-    
-    selected_analysis = st.selectbox("Select analysis type:", custom_analysis_types)
+            selected_analysis = st.selectbox("Select analysis type:", custom_analysis_types)
+
     
     custom_learning_styles = ["Standard", "Visual learner", "Auditory learner", "Reading/writing learner", "Kinesthetic learner"]
     custom_selected_style = st.radio("Select your learning style for the analysis:", custom_learning_styles, horizontal=True)
