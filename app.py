@@ -1526,17 +1526,17 @@ with tabs[3]:
                             else:
                                 st.error("Failed to analyze sentiment. Please try again.")                        
         # Custom Analysis tab
-with analysis_tabs[2]:
-    st.subheader("Custom Document Analysis")
-    
-    custom_analysis_types = [
-        "Content Structure Analysis",
-        "Main Arguments Extraction",
-        "Learning Objectives Identification",
-        "Technical Complexity Assessment", 
-        "Key Definitions Extraction",
-        "Action Items Identification"
-    ]
+        with analysis_tabs[2]:
+            st.subheader("Custom Document Analysis")
+            
+            custom_analysis_types = [
+                "Content Structure Analysis",
+                "Main Arguments Extraction",
+                "Learning Objectives Identification",
+                "Technical Complexity Assessment", 
+                "Key Definitions Extraction",
+                "Action Items Identification"
+            ]
     
     selected_analysis = st.selectbox("Select analysis type:", custom_analysis_types)
     
