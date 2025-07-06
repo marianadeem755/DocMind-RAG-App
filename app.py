@@ -1124,6 +1124,201 @@ def generate_hierarchical_flowchart(vector_store, question):
     except Exception as e:
         print(f"Error generating flowchart: {str(e)}")
         return None
+def perform_custom_analysis(analysis_type, vector_store, learning_style="Standard"):
+    """
+    Perform custom analysis based on the selected analysis type
+    
+    Args:
+        analysis_type (str): Type of analysis to perform
+        vector_store: The vector store containing documents
+        learning_style (str): Learning style for formatting the response
+    
+    Returns:
+        dict: Analysis results with formatted output
+    """
+    
+    if not vector_store:
+        return {"result": "No documents available for analysis. Please upload documents first.", "flowchart": None}
+    
+    try:
+        # Initialize LLM
+        llm = initialize_llm()
+        if not llm:
+            return {"result": "Failed to initialize language model.", "flowchart": None}
+        
+        # Get learning style instructions
+        learning_style_instructions = get_learning_style_prompt(learning_style)
+        
+        # Add specific instructions for visual elements when visual learner is selected
+        visual_instructions = ""
+        if learning_style == "Visual learner":
+            visual_instructions = """
+            You MUST include these visual elements in your response:
+            1. A table summarizing key points
+            2. Use of spatial organization for information
+            3. Clear headings and structured format
+            
+            Do not mention that you're including these elements because of instructions - just include them naturally.
+            """
+        
+        # Get relevant documents
+        docs = vector_store.similarity_search("", k=10)
+        combined_text = "\n\n".join([doc.page_content for doc in docs])
+        
+        # Define different analysis types and their prompts
+        analysis_prompts = {
+            "Key Themes Analysis": """
+            Analyze the following documents and identify the main themes and topics.
+            For each theme, provide:
+            1. A clear description of the theme
+            2. Supporting evidence from the documents
+            3. The significance or importance of this theme
+            
+            Documents:
+            {text}
+            
+            {learning_style_instructions}
+            {visual_instructions}
+            
+            KEY THEMES ANALYSIS:
+            """,
+            
+            "Sentiment Analysis": """
+            Analyze the overall sentiment and tone of the following documents.
+            Provide:
+            1. Overall sentiment classification (Positive/Negative/Neutral)
+            2. Key emotional indicators found in the text
+            3. Examples of language that supports your assessment
+            4. Any shifts in sentiment throughout the documents
+            
+            Documents:
+            {text}
+            
+            {learning_style_instructions}
+            {visual_instructions}
+            
+            SENTIMENT ANALYSIS:
+            """,
+            
+            "Content Structure Analysis": """
+            Analyze the structure and organization of the following documents.
+            Provide:
+            1. Main sections or topics covered
+            2. How the information is organized
+            3. Logical flow and connections between ideas
+            4. Any gaps or areas that could be better developed
+            
+            Documents:
+            {text}
+            
+            {learning_style_instructions}
+            {visual_instructions}
+            
+            CONTENT STRUCTURE ANALYSIS:
+            """,
+            
+            "Key Insights Extraction": """
+            Extract the most important insights and takeaways from the following documents.
+            For each insight, provide:
+            1. The main insight or finding
+            2. Supporting evidence or context
+            3. Potential implications or applications
+            4. Why this insight is significant
+            
+            Documents:
+            {text}
+            
+            {learning_style_instructions}
+            {visual_instructions}
+            
+            KEY INSIGHTS EXTRACTION:
+            """,
+            
+            "Comparative Analysis": """
+            Perform a comparative analysis of the different topics, viewpoints, or sections in the documents.
+            Provide:
+            1. Main points of comparison
+            2. Similarities and differences
+            3. Strengths and weaknesses of different approaches
+            4. Overall assessment and recommendations
+            
+            Documents:
+            {text}
+            
+            {learning_style_instructions}
+            {visual_instructions}
+            
+            COMPARATIVE ANALYSIS:
+            """,
+            
+            "Question Generation": """
+            Based on the following documents, generate thoughtful questions that would help someone understand the content better.
+            Create:
+            1. 5-7 comprehension questions about the main content
+            2. 3-5 analytical questions that require deeper thinking
+            3. 2-3 application questions about how to use this information
+            4. Brief explanations of why these questions are important
+            
+            Documents:
+            {text}
+            
+            {learning_style_instructions}
+            {visual_instructions}
+            
+            QUESTION GENERATION:
+            """
+        }
+        
+        # Get the appropriate prompt
+        prompt_template = analysis_prompts.get(analysis_type, analysis_prompts["Key Themes Analysis"])
+        
+        # Create the prompt
+        prompt = PromptTemplate(
+            input_variables=["text", "learning_style_instructions", "visual_instructions"],
+            template=prompt_template
+        )
+        
+        # Create and run the chain
+        chain = LLMChain(llm=llm, prompt=prompt)
+        result = chain.run(
+            text=combined_text,
+            learning_style_instructions=learning_style_instructions,
+            visual_instructions=visual_instructions
+        )
+        
+        # Generate flowchart for visual learners
+        flowchart_result = None
+        if learning_style == "Visual learner":
+            try:
+                flowchart_result = generate_hierarchical_flowchart(
+                    vector_store, 
+                    f"Create a visual representation of {analysis_type.lower()}"
+                )
+            except Exception as e:
+                logger.error(f"Error generating flowchart: {str(e)}")
+                flowchart_result = None
+        
+        # Extract source information
+        sources = []
+        for doc in docs:
+            if "source" in doc.metadata:
+                if doc.metadata["source"] not in sources:
+                    sources.append(doc.metadata["source"])
+        
+        return {
+            "result": result,
+            "sources": sources,
+            "flowchart": flowchart_result,
+            "analysis_type": analysis_type
+        }
+        
+    except Exception as e:
+        logger.error(f"Error in perform_custom_analysis: {str(e)}")
+        return {
+            "result": f"Error performing analysis: {str(e)}",
+            "flowchart": None,
+            "analysis_type": analysis_type
+        }
 # Main Navigation Menu using native Streamlit components
 tabs = st.tabs(["📄 Upload", "🔍 Q&A", "📝 Summarize", "📊 Analyze"])
 
