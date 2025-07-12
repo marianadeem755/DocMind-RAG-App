@@ -16,7 +16,6 @@ import fitz  # PyMuPDF for PDF image extraction
 from PIL import Image 
 # Load environment variables from .env file
 load_dotenv()
-
 # Configure logging
 logging.basicConfig(level=logging.INFO)
 logger = logging.getLogger(__name__)
