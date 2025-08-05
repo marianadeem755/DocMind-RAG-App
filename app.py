@@ -94,8 +94,8 @@ st.sidebar.title("DocMind RAG System")
 # Model Configuration
 with st.sidebar.expander("🤖 Model Configuration", expanded=False):
     model_options = {
-        "llama3-70b-8192": "Llama-3-70b-8192",
-        "llama3-8b-8192": "Llama-3-8b-8192"
+        "llama-3.3-70b-versatile": "llama-3.3-70b-versatile",
+        "llama-3.1-8b-instant": "llama-3.1-8b-instant"
     }
     
     st.session_state.selected_model = st.selectbox(
@@ -1980,4 +1980,5 @@ with st.sidebar.expander("🔗 Connect With Me", expanded=False):
     </div>
     <hr>
     """, unsafe_allow_html=True)
+
 
