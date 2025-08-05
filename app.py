@@ -68,7 +68,7 @@ if "document_sources" not in st.session_state:
 if "processed_docs" not in st.session_state:
     st.session_state.processed_docs = []
 if "selected_model" not in st.session_state:
-    st.session_state.selected_model = "llama3-70b-8192"
+    st.session_state.selected_model = "llama-3.3-70b-versatile"
 if "chunk_size" not in st.session_state:
     st.session_state.chunk_size = 250
 if "chunk_overlap" not in st.session_state:
@@ -1980,5 +1980,6 @@ with st.sidebar.expander("🔗 Connect With Me", expanded=False):
     </div>
     <hr>
     """, unsafe_allow_html=True)
+
 
 
