@@ -5,7 +5,7 @@ PyMuPDF
 beautifulsoup4
 docx2txt
 faiss-cpu
-langchain
+langchain==0.1.20
 langchain-community
 langchain-groq
 langchain-text-splitters
@@ -23,3 +23,4 @@ networkx
 pydot
 Pillow
 graphviz
+
