@@ -39,7 +39,7 @@ from langchain_core.documents import Document
 # Embeddings and LLM
 from langchain_groq import ChatGroq
 from langchain_community.embeddings import HuggingFaceEmbeddings
-from langchain.chains import RetrievalQA, LLMChain
+from langchain_community.chains import RetrievalQA, LLMChain
 from langchain.prompts import PromptTemplate
 from langchain.callbacks.streaming_stdout import StreamingStdOutCallbackHandler
 from langchain.chains.summarize import load_summarize_chain
@@ -1980,6 +1980,7 @@ with st.sidebar.expander("🔗 Connect With Me", expanded=False):
     </div>
     <hr>
     """, unsafe_allow_html=True)
+
 
 
 
