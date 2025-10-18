@@ -45,7 +45,9 @@ from langchain_core.prompts import PromptTemplate
 from langchain_core.callbacks import StreamingStdOutCallbackHandler
 from langchain_core.runnables import RunnablePassthrough
 from langchain_core.output_parsers import StrOutputParser
-from langchain.chains import load_summarize_chain, RetrievalQA, LLMChain
+from langchain.chains.summarize import load_summarize_chain
+from langchain.chains.retrieval_qa.base import RetrievalQA
+from langchain.chains.llm import LLMChain
 
 # For similarity calculations
 from sklearn.metrics.pairwise import cosine_similarity
@@ -1985,6 +1987,7 @@ with st.sidebar.expander("🔗 Connect With Me", expanded=False):
     </div>
     <hr>
     """, unsafe_allow_html=True)
+
 
 
 
