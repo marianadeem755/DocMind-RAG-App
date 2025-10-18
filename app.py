@@ -13,9 +13,11 @@ import base64
 from io import BytesIO
 import io
 import fitz  # PyMuPDF for PDF image extraction
-from PIL import Image 
+from PIL import Image
+
 # Load environment variables from .env file
 load_dotenv()
+
 # Configure logging
 logging.basicConfig(level=logging.INFO)
 logger = logging.getLogger(__name__)
@@ -39,17 +41,20 @@ from langchain_core.documents import Document
 # Embeddings and LLM
 from langchain_groq import ChatGroq
 from langchain_community.embeddings import HuggingFaceEmbeddings
-from langchain_community.chains import RetrievalQA, LLMChain
-from langchain.prompts import PromptTemplate
-from langchain.callbacks.streaming_stdout import StreamingStdOutCallbackHandler
-from langchain.chains.summarize import load_summarize_chain
+from langchain_core.prompts import PromptTemplate
+from langchain_core.callbacks import StreamingStdOutCallbackHandler
+from langchain_core.runnables import RunnablePassthrough
+from langchain_core.output_parsers import StrOutputParser
+from langchain.chains.summarization import load_summarize_chain
+
+# For similarity calculations
+from sklearn.metrics.pairwise import cosine_similarity
 
 # For flowchart generation
 import matplotlib.pyplot as plt
 import networkx as nx
 from matplotlib.patches import FancyArrowPatch
 import numpy as np
-
 # Configure page
 st.set_page_config(
     page_title="DocMind RAG System",
@@ -1980,6 +1985,7 @@ with st.sidebar.expander("🔗 Connect With Me", expanded=False):
     </div>
     <hr>
     """, unsafe_allow_html=True)
+
 
 
 
