@@ -9,8 +9,7 @@ langchain
 langchain-community
 langchain-groq
 langchain-text-splitters
-numpy
-pandas
+langchain-core
 PyPDF2
 python-docx
 streamlit
@@ -19,3 +18,8 @@ python-dotenv
 pydantic
 sentence-transformers
 huggingface-hub
+scikit-learn
+networkx
+pydot
+Pillow
+graphviz
