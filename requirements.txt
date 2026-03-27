@@ -13,6 +13,7 @@ langchain-core
 PyPDF2
 python-docx
 streamlit
+altair<5
 openpyxl
 python-dotenv
 pydantic
@@ -23,4 +24,3 @@ networkx
 pydot
 Pillow
 graphviz
-
